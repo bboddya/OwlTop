@@ -1,6 +1,16 @@
-import { Button, Htag, Ptag, Tag } from '../components';
+import axios from 'axios';
+import { GetStaticProps } from 'next';
+import React from 'react';
 
-export default function Home(): JSX.Element {
+import { Button, Htag, Ptag, Tag, Rating } from '../components';
+import { MenuItem } from '../interfaces/menu.interface';
+import { withLayout } from '../layouts/Layout';
+
+const Home = ({ menu, firstCategory }: IHome): JSX.Element => {
+  const [rating, setRating] = React.useState<number>(4);
+
+  console.log(menu.flatMap((m) => m.pages.map((p) => '/courses' + p.alias)));
+
   return (
     <>
       <Htag tag="h1">asdfasdfasdf</Htag>
@@ -22,6 +32,35 @@ export default function Home(): JSX.Element {
       <Tag size="m" color="grey">
         another
       </Tag>
+      <Rating rating={rating} isEdited setRating={setRating} />
+
+      <ul>
+        {menu.map((m) => (
+          <li key={m._id.secondCategory}>{m._id.secondCategory}</li>
+        ))}
+      </ul>
     </>
   );
+};
+
+export default withLayout(Home);
+
+export const getStaticProps: GetStaticProps<IHome> = async () => {
+  const firstCategory = 0;
+
+  const { data: menu } = await axios.post<MenuItem[]>('https://courses-top.ru/api/top-page/find', {
+    firstCategory,
+  });
+
+  return {
+    props: {
+      menu,
+      firstCategory,
+    },
+  };
+};
+
+interface IHome extends Record<string, unknown> {
+  menu: MenuItem[];
+  firstCategory: number;
 }
