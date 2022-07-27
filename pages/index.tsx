@@ -9,8 +9,6 @@ import { withLayout } from '../layouts/Layout';
 const Home = ({ menu, firstCategory }: IHome): JSX.Element => {
   const [rating, setRating] = React.useState<number>(4);
 
-  console.log(menu.flatMap((m) => m.pages.map((p) => '/courses' + p.alias)));
-
   return (
     <>
       <Htag tag="h1">asdfasdfasdf</Htag>
@@ -33,12 +31,6 @@ const Home = ({ menu, firstCategory }: IHome): JSX.Element => {
         another
       </Tag>
       <Rating rating={rating} isEdited setRating={setRating} />
-
-      <ul>
-        {menu.map((m) => (
-          <li key={m._id.secondCategory}>{m._id.secondCategory}</li>
-        ))}
-      </ul>
     </>
   );
 };
@@ -48,9 +40,12 @@ export default withLayout(Home);
 export const getStaticProps: GetStaticProps<IHome> = async () => {
   const firstCategory = 0;
 
-  const { data: menu } = await axios.post<MenuItem[]>('https://courses-top.ru/api/top-page/find', {
-    firstCategory,
-  });
+  const { data: menu } = await axios.post<MenuItem[]>(
+    process.env.NEXT_PUBLIC_DOMAIN + '/api/top-page/find',
+    {
+      firstCategory,
+    },
+  );
 
   return {
     props: {

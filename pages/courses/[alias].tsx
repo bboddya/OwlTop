@@ -1,46 +1,54 @@
-import axios from 'axios';
-import { GetStaticProps, GetStaticPaths, GetStaticPropsContext } from 'next';
-import { ParsedUrlQuery } from 'querystring';
+import { GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsContext } from 'next';
 import React from 'react';
+import axios from 'axios';
 import { MenuItem } from '../../interfaces/menu.interface';
 import { TopPageModel } from '../../interfaces/page.interface';
+import { ParsedUrlQuery } from 'node:querystring';
 import { ProductModel } from '../../interfaces/product.interface';
 import { withLayout } from '../../layouts/Layout';
 
 const firstCategory = 0;
 
-const Course = ({ menu, page, products }: ICourse): JSX.Element => {
+function Course({ menu, page, products }: CourseProps): JSX.Element {
+  console.log(menu);
+
   return <>{products && products.length}</>;
-};
+}
 
 export default withLayout(Course);
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data: menu } = await axios.post<MenuItem[]>('https://courses-top.ru/api/top-page/find', {
-    firstCategory,
-  });
-
+  const { data: menu } = await axios.post<MenuItem[]>(
+    process.env.NEXT_PUBLIC_DOMAIN + '/api/top-page/find',
+    {
+      firstCategory,
+    },
+  );
   return {
-    paths: menu.flatMap((m) => m.pages.map((p) => '/courses' + p.alias)),
+    paths: menu.flatMap((m) => m.pages.map((p) => '/courses/' + p.alias)),
     fallback: true,
   };
 };
 
-export const getStaticProps: GetStaticProps<ICourse> = async ({
+export const getStaticProps: GetStaticProps<CourseProps> = async ({
   params,
 }: GetStaticPropsContext<ParsedUrlQuery>) => {
-  if (!params) return { notFound: true };
-
-  const { data: menu } = await axios.post<MenuItem[]>('https://courses-top.ru/api/top-page/find', {
-    firstCategory,
-  });
-
-  const { data: page } = await axios.get<TopPageModel>(
-    'https://courses-top.ru/api/top-page/byAlias/' + params.alias,
+  if (!params) {
+    return {
+      notFound: true,
+    };
+  }
+  const { data: menu } = await axios.post<MenuItem[]>(
+    process.env.NEXT_PUBLIC_DOMAIN + '/api/top-page/find',
+    {
+      firstCategory,
+    },
   );
-
+  const { data: page } = await axios.get<TopPageModel>(
+    process.env.NEXT_PUBLIC_DOMAIN + '/api/top-page/byAlias/' + params.alias,
+  );
   const { data: products } = await axios.post<ProductModel[]>(
-    'https://courses-top.ru/api/top-page/product/find',
+    process.env.NEXT_PUBLIC_DOMAIN + '/api/product/find',
     {
       category: page.category,
       limit: 10,
@@ -57,7 +65,7 @@ export const getStaticProps: GetStaticProps<ICourse> = async ({
   };
 };
 
-interface ICourse extends Record<string, unknown> {
+interface CourseProps extends Record<string, unknown> {
   menu: MenuItem[];
   firstCategory: number;
   page: TopPageModel;
