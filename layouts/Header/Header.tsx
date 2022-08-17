@@ -6,7 +6,7 @@ import cn from 'classnames';
 
 export const Header = ({ className, ...props }: IHeader): JSX.Element => {
   return (
-    <header className={className} {...props}>
+    <header className={cn(className, styles.header)} {...props}>
       Header
     </header>
   );

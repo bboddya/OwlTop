@@ -6,7 +6,7 @@
   min-height: 100vh;
   gap: 40px 30px;
   grid-template-areas:
-    '. sidebar header .'
+    '. header header .'
     '. sidebar body .'
     'footer footer footer footer';
 }
