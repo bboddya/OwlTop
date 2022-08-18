@@ -2,7 +2,7 @@ import axios from 'axios';
 import { GetStaticProps } from 'next';
 import React from 'react';
 
-import { Button, Htag, Ptag, Tag, Rating } from '../components';
+import { Button, Htag, Ptag, Tag, Rating, Input, Textarea } from '../components';
 import { MenuItem } from '../interfaces/menu.interface';
 import { withLayout } from '../layouts/Layout';
 
@@ -27,10 +27,12 @@ const Home = ({ menu, firstCategory }: IHome): JSX.Element => {
       <Tag size="m" color="primary">
         second
       </Tag>
-      <Tag size="m" color="grey">
+      <Tag size="m" color="gray">
         another
       </Tag>
       <Rating rating={rating} isEdited setRating={setRating} />
+      <Input placeholder="name" />
+      <Textarea placeholder="Текст отзыва" />
     </>
   );
 };

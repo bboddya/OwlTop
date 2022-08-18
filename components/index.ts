@@ -4,3 +4,6 @@ export * from './Ptag/Ptag';
 export * from './Tag/Tag';
 export * from './Rating/Rating';
 export * from './HhData/HhData';
+export * from './Card/Card';
+export * from './Input/Input';
+export * from './Textarea/Textarea';

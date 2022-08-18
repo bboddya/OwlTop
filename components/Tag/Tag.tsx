@@ -19,7 +19,7 @@ export const Tag = ({
         [styles.ghost]: color === 'ghost',
         [styles.red]: color === 'red',
         [styles.green]: color === 'green',
-        [styles.grey]: color === 'grey',
+        [styles.gray]: color === 'gray',
         [styles.primary]: color === 'primary',
       })}
     >

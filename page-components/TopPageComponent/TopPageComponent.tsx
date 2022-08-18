@@ -30,7 +30,7 @@ export const TopPageComponent = ({
         <Htag tag="h1">{page.title}</Htag>
 
         {products && (
-          <Tag color="grey" size="m">
+          <Tag color="gray" size="m">
             {products.length}
           </Tag>
         )}

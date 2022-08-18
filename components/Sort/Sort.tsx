@@ -9,23 +9,23 @@ import cn from 'classnames';
 export const Sort = ({ sort, setSort, className, ...props }: SortProps): JSX.Element => {
   return (
     <div className={cn(styles.sort, className)} {...props}>
-      <span
+      <div
         onClick={() => setSort(SortEnum.Rating)}
         className={cn({
           [styles.active]: sort === SortEnum.Rating,
         })}
       >
         <SortIcon className={styles.sortIcon} /> По рейтенгу
-      </span>
+      </div>
 
-      <span
+      <div
         onClick={() => setSort(SortEnum.Price)}
         className={cn({
           [styles.active]: sort === SortEnum.Price,
         })}
       >
         <SortIcon className={styles.sortIcon} /> По&nbsp;цене
-      </span>
+      </div>
     </div>
   );
 };

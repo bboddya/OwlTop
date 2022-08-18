@@ -1,5 +1,8 @@
 import React from 'react';
+import { withLayout } from '../layouts/Layout';
 
-export const Search = () => {
+function Search() {
   return <div>Search</div>;
-};
+}
+
+export default withLayout(Search);
