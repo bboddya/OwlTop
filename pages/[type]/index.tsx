@@ -63,13 +63,10 @@ export const getStaticProps: GetStaticProps<CourseProps> = async ({
     }
 
     const { data: page } = await axios.get<TopPageModel>(API.topPage.byAlias);
-    const { data: products } = await axios.post<ProductModel[]>(
-      process.env.NEXT_PUBLIC_DOMAIN + '/api/product/find',
-      {
-        category: page.category,
-        limit: 10,
-      },
-    );
+    const { data: products } = await axios.post<ProductModel[]>(API.product.find, {
+      category: page.category,
+      limit: 10,
+    });
 
     return {
       props: {
