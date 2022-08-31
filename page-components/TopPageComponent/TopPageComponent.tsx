@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { Advantages, HhData, Htag, Product, Sort, Tag } from '../../components';
 import { TopPageComponentProps } from './TopPageComponent.props';
 
@@ -22,6 +22,10 @@ export const TopPageComponent = ({
     dispatchSort({ type: sort });
   };
 
+  useEffect(() => {
+    dispatchSort({ type: 'reset', initialState: products });
+  }, [products]);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.title}>
@@ -36,7 +40,9 @@ export const TopPageComponent = ({
         <Sort sort={sort} setSort={setSort} />
       </div>
 
-      <div>{products && products.map((p) => <Product product={p} key={p._id} />)}</div>
+      <div>
+        {sortedProducts && sortedProducts.map((p) => <Product layout product={p} key={p._id} />)}
+      </div>
 
       <div className={styles.hhTitle}>
         <Htag tag="h2">Вакансии - {page.category}</Htag>
