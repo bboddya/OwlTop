@@ -16,8 +16,6 @@ export const Menu = (): JSX.Element => {
   const router = useRouter();
   const shouldReduceMotion = useReducedMotion();
 
-  console.log(menu);
-
   const variants = {
     visible: {
       marginBottom: 20,
@@ -34,7 +32,7 @@ export const Menu = (): JSX.Element => {
   const variantsChildren = {
     visible: {
       opacity: 1,
-      height: 29,
+      height: 'auto',
     },
     hidden: { opacity: shouldReduceMotion ? 1 : 0, height: 0 },
   };

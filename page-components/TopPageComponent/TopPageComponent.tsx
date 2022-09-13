@@ -7,6 +7,7 @@ import cn from 'classnames';
 import { TopLevelCategory } from '../../interfaces/page.interface';
 import { SortEnum } from '../../components/Sort/Sort.props';
 import { sortReducer } from './sort.reducer';
+import { Up } from '../../components/Up/Up';
 
 export const TopPageComponent = ({
   firstCategory,
@@ -28,6 +29,8 @@ export const TopPageComponent = ({
 
   return (
     <div className={styles.wrapper}>
+      <Up />
+
       <div className={styles.title}>
         <Htag tag="h1">{page.title}</Htag>
 
